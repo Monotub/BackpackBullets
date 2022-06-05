@@ -7,40 +7,35 @@ using UnityEngine;
 public abstract class ItemBase : MonoBehaviour
 {
     [SerializeField] InventoryItemData myData;
-    [SerializeField] public int currentStack = 0;
-    [SerializeField] int maxStackSize;
 
     public InventoryItemData MyData => myData;
-    public int MaxStackSize => maxStackSize;
-    public Sprite Sprite => sprite.sprite;
+    public Sprite Sprite => spriteRend.sprite;
+    public string ItemName => itemName;
+    public ItemType ItemType => itemType;
     
-    SpriteRenderer sprite;
+    SpriteRenderer spriteRend;
     string itemName;
-    int id;
+    ItemType itemType;
 
 
 
     private void Awake()
     {
-        sprite = GetComponent<SpriteRenderer>();
-        sprite.sprite = myData.Icon;
-
-        id = myData.Id;
+        spriteRend = GetComponent<SpriteRenderer>();
+        spriteRend.sprite = myData.Icon;
         itemName = myData.ItemName;
-        maxStackSize = myData.MaxStackSize;
-        if (currentStack == 0) currentStack = 1;
+        itemType = myData.ItemType;
     }
-
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            if(Inventory.Instance.TryAddItemToInventory(myData))
-                Destroy(gameObject);
+            if(itemType == ItemType.Potion)
+            {
+                if (PotionBar.Instance.TryAddItemToPotionBar(myData))
+                    Destroy(gameObject);
+            }
         }
     }
-
-    
 }

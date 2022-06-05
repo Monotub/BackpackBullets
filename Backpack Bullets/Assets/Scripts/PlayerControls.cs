@@ -4,33 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [SelectionBase]
-public class Player : MonoBehaviour
+public class PlayerControls : MonoBehaviour
 {
     [SerializeField] float moveSpeed;
-    [SerializeField] Canvas inventoryScreen;
 
     Vector3 velocity = new Vector2();
     Rigidbody2D rb;
     Camera cam;
 
+    public static event Action<int> OnPotionKeyPress;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
-        inventoryScreen.enabled = false;
     }
 
     void Update()
     {
-        LookAtMousePosition();
         HandleMovement();
-        ToggleInventoryScreen();
-    }
-
-    private void ToggleInventoryScreen()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab)) inventoryScreen.enabled = !inventoryScreen.enabled;
+        LookAtMousePosition();
+        HandleQuickbarInput();
     }
 
     private void HandleMovement()
@@ -49,5 +43,17 @@ public class Player : MonoBehaviour
         float rotZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotZ - 90);
     }
-    
+
+    void HandleQuickbarInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            OnPotionKeyPress?.Invoke(0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            OnPotionKeyPress?.Invoke(1);
+        }
+    }
 }

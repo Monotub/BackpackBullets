@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OtherItem : ItemBase
+public class Potion : ItemBase
 {
 
 }

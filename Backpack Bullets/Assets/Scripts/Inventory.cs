@@ -20,41 +20,19 @@ public class Inventory : MonoBehaviour
     {
         bool itemAdded = false;
 
-        if (itemList.Contains(item))
+        foreach (var slot in slots)
         {
-            Debug.Log($"{item} FOUND in inventory");
-            if(item.MaxStackSize > 1)
+            if (slot.IsEmpty)
             {
-                foreach(var slot in slots)
-                {
-                    if (slot.MyItemData == item && slot.currentStackSize < item.MaxStackSize)
-                    {
-                        Debug.Log("Slot found with available stack");
-                        itemList.Add(item);
-                        slot.currentStackSize++;
-                        itemAdded = true;
-                        return itemAdded;
-                    }
-                    else
-                    {
-                        // Need to be able to add item to empty slot if current slot reaches max stack size
-                    }
-                }
-            }
-            else
-            {
-                AddItemToEmptySlot(item);
+                itemList.Add(item);
+                slot.AddItemToSlot(item);
                 itemAdded = true;
+                return itemAdded;
             }
-            return itemAdded;
         }
-        else
-        {
-            Debug.Log($"{item} NOT FOUND in inventory");
-            AddItemToEmptySlot(item);
-            itemAdded = true;
-            return itemAdded;
-        }
+
+        return itemAdded;
+        
     }
 
     public bool TryRemoveItemFromInventory(InventoryItemData item)
@@ -66,22 +44,8 @@ public class Inventory : MonoBehaviour
             itemList.Remove(item);
             return itemRemoved = true;
         }
-        else Debug.Log("No such item found");
+        else Debug.LogError("No such item found");
 
         return itemRemoved;
-    }
-
-    void AddItemToEmptySlot(InventoryItemData item)
-    {
-        foreach (var slot in slots)
-        {
-            if (slot.IsEmpty)
-            {
-                Debug.Log($"{item} added to empty inventory slot");
-                itemList.Add(item);
-                slot.AddItemToSlot(item);
-                return;
-            }
-        }
     }
 }
