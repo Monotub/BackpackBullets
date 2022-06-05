@@ -17,7 +17,6 @@ public class InventoryItemData : ScriptableObject
 public enum ItemType
 {
     Potion,
-    Weapon,
-    Armor
+    MainHand
 }
 

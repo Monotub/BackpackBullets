@@ -6,6 +6,8 @@ using UnityEngine;
 [SelectionBase]
 public class PlayerControls : MonoBehaviour
 {
+    // TODO: Move moveSpeed stat into a seperate player stats script once that's created
+
     [SerializeField] float moveSpeed;
 
     Vector3 velocity = new Vector2();
@@ -47,13 +49,9 @@ public class PlayerControls : MonoBehaviour
     void HandleQuickbarInput()
     {
         if (Input.GetKeyDown(KeyCode.Q))
-        {
             OnPotionKeyPress?.Invoke(0);
-        }
 
         if (Input.GetKeyDown(KeyCode.E))
-        {
             OnPotionKeyPress?.Invoke(1);
-        }
     }
 }

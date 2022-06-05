@@ -30,12 +30,15 @@ public abstract class ItemBase : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
+            PickupItem();
+    }
+
+    private void PickupItem()
+    {
+        if (itemType == ItemType.Potion)
         {
-            if(itemType == ItemType.Potion)
-            {
-                if (PotionBar.Instance.TryAddItemToPotionBar(myData))
-                    Destroy(gameObject);
-            }
+            if (PotionBar.Instance.TryAddItemToPotionBar(myData))
+                Destroy(gameObject);
         }
     }
 }
