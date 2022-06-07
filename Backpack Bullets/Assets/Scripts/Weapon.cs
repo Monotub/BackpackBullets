@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-public class Potion : ItemBase
+public class Weapon : ItemBase
 {
-    
+
 }

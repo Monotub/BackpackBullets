@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7887729355947666074}
   - component: {fileID: 3631603116736440508}
   - component: {fileID: 8154879085597404503}
-  - component: {fileID: 7634106761304071468}
+  - component: {fileID: -4207012180652087659}
   m_Layer: 0
-  m_Name: Potion 2
+  m_Name: Test Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &7634106761304071468
+--- !u!114 &-4207012180652087659
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2751619705097944438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d636b9c7b78f53943aaeccf1cb2aa560, type: 3}
+  m_Script: {fileID: 11500000, guid: 198f16990bd6c5445949a5b575f18378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myData: {fileID: 11400000, guid: 59c4ff147fdc17946a4a80a362fa9b3f, type: 2}

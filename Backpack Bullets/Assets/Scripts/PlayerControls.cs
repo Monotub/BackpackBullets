@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
 
 [SelectionBase]
 public class PlayerControls : MonoBehaviour
 {
     // TODO: Move moveSpeed stat into a seperate player stats script once that's created
-
     [SerializeField] float moveSpeed;
 
     Vector3 velocity = new Vector2();
@@ -15,6 +17,7 @@ public class PlayerControls : MonoBehaviour
     Camera cam;
 
     public static event Action<int> OnPotionKeyPress;
+    public static event Action OnInventoryToggle;
 
     private void Awake()
     {
@@ -24,9 +27,15 @@ public class PlayerControls : MonoBehaviour
 
     void Update()
     {
-        HandleMovement();
-        LookAtMousePosition();
-        HandleQuickbarInput();
+        if (!UIManager.Instance.IsInventoryOpen)
+        {
+            HandleMovement();
+            LookAtMousePosition();
+            HandleQuickbarInput();
+        }
+
+        ToggleInventoryScreen();
+        ReloadSandbox();    // TODO: Delete this helper function
     }
 
     private void HandleMovement()
@@ -53,5 +62,19 @@ public class PlayerControls : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
             OnPotionKeyPress?.Invoke(1);
+    }
+
+    void ToggleInventoryScreen()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            OnInventoryToggle?.Invoke();
+        }
+    }
+
+    void ReloadSandbox()
+    {
+        if(Input.GetKeyDown(KeyCode.Backspace))
+            SceneManager.LoadScene(0);
     }
 }

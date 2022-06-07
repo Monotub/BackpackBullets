@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class PotionBar : MonoBehaviour
 {
-    // TODO: Create the ability to drag a potion from one slot to another
-
-
     [SerializeField] List<InventorySlot> slots = new List<InventorySlot>();
     [SerializeField] List<InventoryItemData> potionList = new List<InventoryItemData>();
 
@@ -18,15 +17,8 @@ public class PotionBar : MonoBehaviour
 
     }
 
-    private void OnEnable()
-    {
-        PlayerControls.OnPotionKeyPress += ProcessPotionKey;
-    }
-
-    private void OnDisable()
-    {
-        PlayerControls.OnPotionKeyPress -= ProcessPotionKey;
-    }
+    private void OnEnable() { PlayerControls.OnPotionKeyPress += ProcessPotionKey; }
+    private void OnDisable() { PlayerControls.OnPotionKeyPress -= ProcessPotionKey; }
 
     void ProcessPotionKey(int key)
     {
@@ -39,33 +31,36 @@ public class PotionBar : MonoBehaviour
 
     public bool TryAddItemToPotionBar(InventoryItemData item)
     {
-        bool itemAdded = false;
-
         foreach (var slot in slots)
         {
             if (slot.IsEmpty)
             {
                 potionList.Add(item);
                 slot.AddItemToSlot(item);
-                itemAdded = true;
-                return itemAdded;
+                return true;
             }
         }
 
-        return itemAdded;
+        return false;
+    }
+
+    public void AddItemToPotionListOnly(InventoryItemData item)
+    {
+        if(item.ItemType == ItemType.Potion)
+            potionList.Add(item);
     }
 
     public bool TryRemoveItemFromPotionBar(InventoryItemData item)
     {
         bool itemRemoved = false;
 
-        if (potionList.Contains(item))
+        if (potionList.Contains(item) && !itemRemoved)
         {
             potionList.Remove(item);
-            return itemRemoved = true;
+            itemRemoved = true;
+            return true;
         }
-        else Debug.LogError("No such item found");
 
-        return itemRemoved;
+        return false;
     }
 }
