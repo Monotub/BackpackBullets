@@ -13,7 +13,7 @@ public abstract class ItemBase : MonoBehaviour
     SpriteRenderer spriteRend;
     string itemName;
     ItemType itemType;
-    
+    Transform inventoryParent;
 
     public InventoryItemData MyData => myData;
     public Sprite Sprite => spriteRend.sprite;
@@ -27,6 +27,7 @@ public abstract class ItemBase : MonoBehaviour
         spriteRend.sprite = myData.Icon;
         itemName = myData.ItemName;
         itemType = myData.ItemType;
+        inventoryParent = FindObjectOfType<InventoryParent>().transform;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -40,17 +41,24 @@ public abstract class ItemBase : MonoBehaviour
         if (itemType == ItemType.Potion)
         {
             if (PotionBar.Instance.TryAddItemToPotionBar(this))
-                //Destroy(gameObject);
+            {
+                transform.SetParent(inventoryParent);
                 gameObject.SetActive(false);
+
+            }
             else if (InventorySystem.Instance.TryAddItemToInventory(this))
-                //Destroy(gameObject);
+            {
+                transform.SetParent(inventoryParent);
                 gameObject.SetActive(false);
+            }
         }
         else
         {
             if (InventorySystem.Instance.TryAddItemToInventory(this))
-                //Destroy(gameObject);
+            {
+                transform.SetParent(inventoryParent);
                 gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -30,6 +30,12 @@ public class StatSystem : MonoBehaviour
 
     private void Start()
     {
+        strength = strBase;
+        intelligence = intBase;
+        damage = dmgBase;
+        defense = defBase;
+        moveSpeed = speedBase;
+        
         UpdateStatUI();
     }
 
@@ -44,14 +50,15 @@ public class StatSystem : MonoBehaviour
 
     public void UpdateStatValue(ItemType type, float value)
     {
+
         switch (type) 
         {
             case ItemType.MainHand:
-                
                 damage = dmgBase + value;
                 UpdateStatUI();
                 break;
         }
+
 
     }
 }

@@ -21,7 +21,6 @@ public class InventorySystem : MonoBehaviour
         {
             if (slot.IsEmpty)
             {
-                Debug.Log($"Adding {item.gameObject} to inventory");
                 itemList.Add(item.gameObject);
                 slot.AddItemToSlot(item);
                 return true;

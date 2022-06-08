@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,11 +23,15 @@ public class PotionBar : MonoBehaviour
 
     void ProcessPotionKey(int key)
     {
-        if(key == 0 && slots[0].MyItemData != null)
-            slots[0].RemoveItemFromSlot();
+        Potion[] temp = FindObjectsOfType<Potion>(true);    // TRUE allows it to find inactive objects!
+        foreach (var thing in temp)
+        {
+            if (thing.name == slots[key].MyItemData.name)
+                Destroy(thing.gameObject);
+        }
 
-        if (key == 1 && slots[1].MyItemData != null)
-            slots[1].RemoveItemFromSlot();
+        if (slots[key].MyItemData != null)
+            slots[key].RemoveItemFromSlot();
     }
 
     public bool TryAddItemToPotionBar(ItemBase item)
