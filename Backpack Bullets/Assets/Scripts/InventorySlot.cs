@@ -8,29 +8,39 @@ using TMPro;
 
 public class InventorySlot : MonoBehaviour
 {
-    [SerializeField] InventoryItemData myItemData;
+    [SerializeField] ItemBase myItemData;
     [SerializeField] SlotType slotType;
+    [SerializeField] Image image;
 
     MouseSlot mouseSlot;
-    Image image;
     bool isEmpty = true;
+    Color fullColor = new Color(1, 1, 1, 1);
+    Color transparent = new Color(0, 0, 0, 0);
 
     public bool IsEmpty => isEmpty;
-    public InventoryItemData MyItemData => myItemData;
+    public ItemBase MyItemData => myItemData;
 
 
     private void Awake()
     {
-        image = GetComponent<Image>();
         mouseSlot = FindObjectOfType<MouseSlot>();
     }
 
-    public void AddItemToSlot(InventoryItemData item)
+    private void Update()
+    {
+        if (image.sprite != null)
+            image.color = fullColor;
+        else
+            image.color = transparent;
+
+    }
+
+    public void AddItemToSlot(ItemBase item)
     {
         if (item == null) return;
-        
+
         myItemData = item;
-        image.sprite = item.Icon;
+        image.sprite = item.MyData.Icon;
         isEmpty = false;
     }
 
@@ -41,18 +51,24 @@ public class InventorySlot : MonoBehaviour
             PotionBar.Instance.TryRemoveItemFromPotionBar(myItemData);
             ClearSlotData();
         }
-        else
+        else if(slotType == SlotType.Inventory)
         {
-            Inventory.Instance.TryRemoveItemFromInventory(myItemData);
+            InventorySystem.Instance.TryRemoveItemFromInventory(myItemData);
             ClearSlotData();
         }
+        else
+        {
+            GearSystem.Instance.TryRemoveItemFromGear(MyItemData);
+            ClearSlotData();
+        }
+
     }
 
     public void SlotClicked()
     {
         if (!UIManager.Instance.IsInventoryOpen) return;
 
-        InventoryItemData mouseItemData = mouseSlot.MouseData;
+        ItemBase mouseItemData = mouseSlot.MouseData;
 
         if (myItemData != null && mouseItemData == null)
         {
@@ -73,7 +89,7 @@ public class InventorySlot : MonoBehaviour
                         AddItemToSlot(mouseItemData);
                     }
                     else
-                        Inventory.Instance.TryAddItemToInventory(mouseItemData);
+                        InventorySystem.Instance.TryAddItemToInventory(mouseItemData);
                     break;
 
                 case SlotType.MainHand:
@@ -93,11 +109,11 @@ public class InventorySlot : MonoBehaviour
                     break;
 
                 case SlotType.Boots:
-                    TryAddItemToGearSlot(ItemType.BootGear);
+                    TryAddItemToGearSlot(ItemType.FootGear);
                     break;
 
                 default:
-                    Inventory.Instance.AddItemToInventoryListOnly(mouseItemData);
+                    InventorySystem.Instance.AddItemToInventoryListOnly(mouseItemData);
                     AddItemToSlot(mouseItemData);
                     break;
             }
@@ -116,17 +132,15 @@ public class InventorySlot : MonoBehaviour
 
     void TryAddItemToGearSlot(ItemType type)
     {
-        if (mouseSlot.MouseData.ItemType == type)
+        if (mouseSlot.MouseData.ItemType == type && myItemData == null)
         {
-            Debug.Log("This gear slot not setup yet.");
-
-            // Replace this line with AddToGearList function
-            Inventory.Instance.TryAddItemToInventory(mouseSlot.MouseData);
+            if(GearSystem.Instance.TryAddItemToGear(mouseSlot.MouseData))
+                AddItemToSlot(mouseSlot.MouseData);
             return;
         }
         else
             Debug.Log("The item doesn't belong in this slot");
-            Inventory.Instance.TryAddItemToInventory(mouseSlot.MouseData);
+        InventorySystem.Instance.TryAddItemToInventory(mouseSlot.MouseData);
     }
 
     void ClearSlotData() 
@@ -137,7 +151,7 @@ public class InventorySlot : MonoBehaviour
     }
 }
 
-enum SlotType
+public enum SlotType
 {
     Inventory,
     Potion,

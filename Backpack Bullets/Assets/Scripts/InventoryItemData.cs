@@ -21,6 +21,6 @@ public enum ItemType
     OffHand,
     HeadGear,
     ChestGear,
-    BootGear
+    FootGear
 }
 

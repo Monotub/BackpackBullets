@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class MouseSlot : MonoBehaviour
 {
     [SerializeField] Image mouseImage;
-    [SerializeField] InventoryItemData mouseData = null;
+    [SerializeField] ItemBase mouseData = null;
 
-    public InventoryItemData MouseData => mouseData;
+    public ItemBase MouseData => mouseData;
 
 
     private void Start()
@@ -24,12 +24,12 @@ public class MouseSlot : MonoBehaviour
         else mouseImage.enabled = false;
     }
 
-    public void AddItemToMouse(InventoryItemData item)
+    public void AddItemToMouse(ItemBase item)
     {
         if(mouseData == null)
         {
             mouseData = item;
-            mouseImage.sprite = item.Icon;
+            mouseImage.sprite = item.MyData.Icon;
         }
     }
 

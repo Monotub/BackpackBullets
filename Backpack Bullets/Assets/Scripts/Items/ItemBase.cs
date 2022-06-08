@@ -7,12 +7,13 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(CircleCollider2D))]
 public abstract class ItemBase : MonoBehaviour
-{
+{   [Header("Base Item Setup")]
     [SerializeField] InventoryItemData myData;
     
     SpriteRenderer spriteRend;
     string itemName;
     ItemType itemType;
+    
 
     public InventoryItemData MyData => myData;
     public Sprite Sprite => spriteRend.sprite;
@@ -38,18 +39,18 @@ public abstract class ItemBase : MonoBehaviour
     {
         if (itemType == ItemType.Potion)
         {
-            if (PotionBar.Instance.TryAddItemToPotionBar(myData))
-                Destroy(gameObject);
-            else if (Inventory.Instance.TryAddItemToInventory(MyData))
-            {
-                Debug.Log("Quickbar full. Added potion to inventory instead.");
-                Destroy(gameObject);
-            }
+            if (PotionBar.Instance.TryAddItemToPotionBar(this))
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
+            else if (InventorySystem.Instance.TryAddItemToInventory(this))
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
         }
         else
         {
-            if (Inventory.Instance.TryAddItemToInventory(MyData))
-                Destroy(gameObject);
+            if (InventorySystem.Instance.TryAddItemToInventory(this))
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
         }
     }
 }

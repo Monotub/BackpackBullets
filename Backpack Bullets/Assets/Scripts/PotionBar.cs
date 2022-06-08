@@ -7,7 +7,7 @@ using UnityEngine;
 public class PotionBar : MonoBehaviour
 {
     [SerializeField] List<InventorySlot> slots = new List<InventorySlot>();
-    [SerializeField] List<InventoryItemData> potionList = new List<InventoryItemData>();
+    [SerializeField] List<ItemBase> potionList = new List<ItemBase>();
 
     public static PotionBar Instance { get; private set; }
 
@@ -29,7 +29,7 @@ public class PotionBar : MonoBehaviour
             slots[1].RemoveItemFromSlot();
     }
 
-    public bool TryAddItemToPotionBar(InventoryItemData item)
+    public bool TryAddItemToPotionBar(ItemBase item)
     {
         foreach (var slot in slots)
         {
@@ -44,13 +44,13 @@ public class PotionBar : MonoBehaviour
         return false;
     }
 
-    public void AddItemToPotionListOnly(InventoryItemData item)
+    public void AddItemToPotionListOnly(ItemBase item)
     {
         if(item.ItemType == ItemType.Potion)
             potionList.Add(item);
     }
 
-    public bool TryRemoveItemFromPotionBar(InventoryItemData item)
+    public bool TryRemoveItemFromPotionBar(ItemBase item)
     {
         bool itemRemoved = false;
 
