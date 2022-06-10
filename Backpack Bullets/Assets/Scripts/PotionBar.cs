@@ -34,7 +34,7 @@ public class PotionBar : MonoBehaviour
             slots[key].RemoveItemFromSlot();
     }
 
-    public bool TryAddItemToPotionBar(ItemBase item)
+    public bool TryAddToPotionBar(ItemBase item)
     {
         foreach (var slot in slots)
         {
@@ -49,13 +49,19 @@ public class PotionBar : MonoBehaviour
         return false;
     }
 
-    public void AddItemToPotionListOnly(ItemBase item)
+    public void AddPotionToListOnly(ItemBase item)
     {
         if(item.ItemType == ItemType.Potion)
             potionList.Add(item);
     }
 
-    public bool TryRemoveItemFromPotionBar(ItemBase item)
+    public void AddPotionToCurrentSlot(InventorySlot slot, ItemBase item)
+    {
+        potionList.Add(item);
+        slot.AddItemToSlot(item);
+    }
+
+    public bool TryRemoveFromPotionBar(ItemBase item)
     {
         bool itemRemoved = false;
 

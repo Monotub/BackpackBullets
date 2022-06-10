@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class GearSystem : MonoBehaviour
 {
-    [SerializeField] MainHand mainHandGear;
-    [SerializeField] OffHand offHandGear;
-    [SerializeField] HeadGear headGear;
-    [SerializeField] ChestGear chestGear;
-    [SerializeField] FootGear footGear;
+    public MainHand mainHandGear { get; private set; }
+    public OffHand offHandGear { get; private set; }
+    public HeadGear headGear { get; private set; }
+    public ChestGear chestGear { get; private set; }
+    public FootGear footGear { get; private set; }
 
-    public ItemBase MainHand => mainHandGear;
 
     public static GearSystem Instance { get; private set; }
 
@@ -27,7 +26,7 @@ public class GearSystem : MonoBehaviour
                 if (mainHandGear == null)
                 {
                     mainHandGear = item.GetComponent<MainHand>();
-                    StatSystem.Instance.UpdateStatValue(ItemType.MainHand, mainHandGear.WeaponDamage);
+                    StatSystem.Instance.UpdateStatValues();
                     return true;
                 }
                 else
@@ -37,6 +36,7 @@ public class GearSystem : MonoBehaviour
                 if (offHandGear == null)
                 {
                     offHandGear = item.GetComponent<OffHand>();
+                    StatSystem.Instance.UpdateStatValues();
                     return true;
                 }
                 else
@@ -46,6 +46,7 @@ public class GearSystem : MonoBehaviour
                 if (headGear == null)
                 {
                     headGear = item.GetComponent<HeadGear>();
+                    StatSystem.Instance.UpdateStatValues();
                     return true;
                 }
                 else
@@ -55,6 +56,7 @@ public class GearSystem : MonoBehaviour
                 if (chestGear == null)
                 {
                     chestGear = item.GetComponent<ChestGear>();
+                    StatSystem.Instance.UpdateStatValues();
                     return true;
                 }
                 else
@@ -64,6 +66,7 @@ public class GearSystem : MonoBehaviour
                 if (footGear == null)
                 {
                     footGear = item.GetComponent<FootGear>();
+                    StatSystem.Instance.UpdateStatValues();
                     return true;
                 }
                 else
@@ -72,7 +75,8 @@ public class GearSystem : MonoBehaviour
             default:
                 return false;
         }
-        
+
+
     }
 
     public bool TryRemoveItemFromGear(ItemBase item)
@@ -81,23 +85,27 @@ public class GearSystem : MonoBehaviour
         {
             case ItemType.MainHand:
                 mainHandGear = null;
-                StatSystem.Instance.UpdateStatValue(ItemType.MainHand, 0f);
+                StatSystem.Instance.UpdateStatValues();
                 return true;
 
             case ItemType.OffHand:
                 offHandGear = null;
+                StatSystem.Instance.UpdateStatValues();
                 return true;
 
             case ItemType.HeadGear:
                 headGear = null;
+                StatSystem.Instance.UpdateStatValues();
                 return true;
 
             case ItemType.ChestGear:
                 chestGear = null;
+                StatSystem.Instance.UpdateStatValues();
                 return true;
 
             case ItemType.FootGear:
                 footGear = null;
+                StatSystem.Instance.UpdateStatValues();
                 return true;
 
             default:

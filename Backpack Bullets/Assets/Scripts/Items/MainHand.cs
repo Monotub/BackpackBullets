@@ -4,10 +4,7 @@ using UnityEngine;
 
 
 
-public class MainHand : ItemBase
+public class MainHand : GearBase
 {
-    [Header("Weapon Stats")]
-    [SerializeField] float weaponDamage;
 
-    public float WeaponDamage => weaponDamage;
 }

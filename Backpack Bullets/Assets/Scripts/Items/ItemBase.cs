@@ -40,13 +40,13 @@ public abstract class ItemBase : MonoBehaviour
     {
         if (itemType == ItemType.Potion)
         {
-            if (PotionBar.Instance.TryAddItemToPotionBar(this))
+            if (PotionBar.Instance.TryAddToPotionBar(this))
             {
                 transform.SetParent(inventoryParent);
                 gameObject.SetActive(false);
 
             }
-            else if (InventorySystem.Instance.TryAddItemToInventory(this))
+            else if (InventorySystem.Instance.TryAddToFirstAvailableSlot(this))
             {
                 transform.SetParent(inventoryParent);
                 gameObject.SetActive(false);
@@ -54,7 +54,7 @@ public abstract class ItemBase : MonoBehaviour
         }
         else
         {
-            if (InventorySystem.Instance.TryAddItemToInventory(this))
+            if (InventorySystem.Instance.TryAddToFirstAvailableSlot(this))
             {
                 transform.SetParent(inventoryParent);
                 gameObject.SetActive(false);

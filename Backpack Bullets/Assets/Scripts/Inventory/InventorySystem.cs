@@ -14,7 +14,7 @@ public class InventorySystem : MonoBehaviour
         if (Instance == null) Instance = this;
     }
 
-    public bool TryAddItemToInventory(ItemBase item)
+    public bool TryAddToFirstAvailableSlot(ItemBase item)
     {
         //TODO: Add conditions for when inventory is full. I'm assuming item will just disappear into the void
         foreach (var slot in slots)
@@ -30,12 +30,18 @@ public class InventorySystem : MonoBehaviour
         return false;
     }
 
-    public void AddItemToInventoryListOnly(ItemBase item)
+    public void AddItemToListOnly(ItemBase item)
     {
             itemList.Add(item.gameObject);
     }
 
-    public bool TryRemoveItemFromInventory(ItemBase item)
+    public void AddItemToCurrentSlot(InventorySlot slot, ItemBase item)
+    {
+        itemList.Add(item.gameObject);
+        slot.AddItemToSlot(item);
+    }
+
+    public bool TryRemoveFromInventory(ItemBase item)
     {
         if (itemList.Contains(item.gameObject))
         {
