@@ -24,11 +24,11 @@ public class StatSystem : MonoBehaviour
     float moveSpeedBase = 10;
 
     // Final stat totals
-    float strength;
-    float intelligence;
-    float damage;
-    float defense;
-    float moveSpeed;
+    public float strength { get; private set; }
+    public float intelligence { get; private set; }
+    public float damage { get; private set; }
+    public float defense { get; private set; }
+    public float moveSpeed { get; private set; }
 
 
     void Awake() 

@@ -9,9 +9,6 @@ using UnityEngine.SceneManagement;
 [SelectionBase]
 public class PlayerControls : MonoBehaviour
 {
-    // TODO: Move moveSpeed stat into a seperate player stats script once that's created
-    [SerializeField] float moveSpeed;
-
     Vector3 velocity = new Vector2();
     Rigidbody2D rb;
     Camera cam;
@@ -40,10 +37,11 @@ public class PlayerControls : MonoBehaviour
 
     private void HandleMovement()
     {
+        float moveSpeed = StatSystem.Instance.moveSpeed;
         velocity.x = Input.GetAxis("Horizontal");
         velocity.y = Input.GetAxis("Vertical");
 
-        transform.position += moveSpeed * Time.deltaTime * velocity;
+        transform.position += (moveSpeed / 2)* Time.deltaTime * velocity;
     }
 
     private void LookAtMousePosition()
