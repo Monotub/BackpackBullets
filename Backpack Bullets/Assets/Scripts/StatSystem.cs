@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
 public class StatSystem : MonoBehaviour
 {
@@ -17,11 +18,11 @@ public class StatSystem : MonoBehaviour
     GearSystem gearSystem;
 
     // Stat base values
-    float strBase = 10;
-    float intBase = 10;
-    float dmgBase = 10;
-    float defBase = 10;
-    float moveSpeedBase = 10;
+    float strBase = 5;
+    float intBase = 5;
+    float dmgBase = 5;
+    float defBase = 5;
+    float moveSpeedBase = 5;
 
     // Final stat totals
     public float strength { get; private set; }
@@ -30,7 +31,7 @@ public class StatSystem : MonoBehaviour
     public float defense { get; private set; }
     public float moveSpeed { get; private set; }
 
-
+    
     void Awake() 
     { 
         if (Instance == null) Instance = this;

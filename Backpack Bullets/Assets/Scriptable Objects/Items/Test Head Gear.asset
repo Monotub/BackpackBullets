@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 3
   itemName: Helm
-  icon: {fileID: 21300000, guid: b8cfc703f7c69b74c9edfe14850134c3, type: 3}
+  icon: {fileID: 21300000, guid: ab7fad69d9e1ff34a8695e4bfd395041, type: 3}

@@ -120,3 +120,5 @@ MonoBehaviour:
   damage: 30
   defense: 0
   moveSpeed: 15
+  attackType: 1
+  attackDelay: 0.5

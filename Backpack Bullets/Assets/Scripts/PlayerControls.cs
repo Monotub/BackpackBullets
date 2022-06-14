@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 
@@ -10,15 +11,16 @@ using UnityEngine.SceneManagement;
 public class PlayerControls : MonoBehaviour
 {
     Vector3 velocity = new Vector2();
-    Rigidbody2D rb;
     Camera cam;
 
     public static event Action<int> OnPotionKeyPress;
     public static event Action OnInventoryToggle;
 
+    public static event Action OnPrimaryAttack;
+    public static event Action OnSecondaryAttack;
+
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
     }
 
@@ -29,6 +31,7 @@ public class PlayerControls : MonoBehaviour
             HandleMovement();
             LookAtMousePosition();
             HandleQuickbarInput();
+            ProcessAttacks();
         }
 
         ToggleInventoryScreen();
@@ -41,7 +44,7 @@ public class PlayerControls : MonoBehaviour
         velocity.x = Input.GetAxis("Horizontal");
         velocity.y = Input.GetAxis("Vertical");
 
-        transform.position += (moveSpeed / 2)* Time.deltaTime * velocity;
+        transform.position += (moveSpeed / 2) * Time.deltaTime * velocity;
     }
 
     private void LookAtMousePosition()
@@ -60,6 +63,21 @@ public class PlayerControls : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
             OnPotionKeyPress?.Invoke(1);
+    }
+
+    void ProcessAttacks()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            OnPrimaryAttack?.Invoke();
+
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            OnSecondaryAttack?.Invoke();
+        }
+        else
+            GetComponent<PlayerCombat>().StopAllAttacks();
     }
 
     void ToggleInventoryScreen()

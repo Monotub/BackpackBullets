@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GearBase : ItemBase
 {
+    [Header("Stat Bonuses")]
     [SerializeField] float strength;
     [SerializeField] float intelligence;
     [SerializeField] float damage;
